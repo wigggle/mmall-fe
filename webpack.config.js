@@ -2,27 +2,28 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-//»·¾³±äÁ¿µÄÅäÖÃ dev/online
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dev/online
 var WEBPACK_ENV = process.env.WEBPACK_ENV || 'dev';
 //console.log(WEBPACK_ENV);
 
-//ÕâÊÇ»ñÈ¡html-webpack-plugin²ÎÊıµÄ·½·¨
-var getHtmlConfig = function(name){
+//ï¿½ï¿½ï¿½Ç»ï¿½È¡html-webpack-pluginï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
+var getHtmlConfig = function(name ,title){
     return{
-        template : './src/view/'+name+'.html',
-        filename : 'view/'+name+'.html',
+        template : './src/view/'+ name +'.html',
+        filename : 'view/'+ name + '.html',
+        title : title,
         inject:true,
         hash:true,
         chunks:['common',name]
     };
 };
-
 //webpack config
 var config = {
     entry: {
         'common':['./src/page/common/index.js','webpack-dev-server/client?http://localhost:8088/'],
         'index':['./src/page/index/index.js'],
-        'login':['./src/page/login/index.js']
+        'login':['./src/page/login/index.js'],
+        'result':['./src/page/result/index.js']
     },
     output:{
         path: './dist',
@@ -35,20 +36,31 @@ var config = {
     module:{
         loaders:[
             { test:/\.css$/, loader : ExtractTextPlugin.extract("style-loader","css-loader") },
-            { test:/\.(gif|png|jpg|woff|svg|eot|ttf)\??.*$/, loader : 'url-loader?limit=100&name=resource/[name].[ext]'}
+            { test:/\.(gif|png|jpg|woff|svg|eot|ttf)\??.*$/, loader : 'url-loader?limit=100&name=resource/[name].[ext]'},
+            { test:/\.string$/, loader : 'html-loader' }
         ]
     },
+    resolve:{
+        alias:{
+            util    :__dirname + '/src/util',
+            page    :__dirname + '/src/page',
+            image   :__dirname + '/src/image',
+            service :__dirname + '/src/service',
+            node_modules : __dirname + '/node_modules'
+        }
+    },
     plugins: [
-        //¶ÀÁ¢Í¨ÓÃÄ£¿éµ½js/base.js
+        //ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Ä£ï¿½éµ½js/base.js
         new webpack.optimize.CommonsChunkPlugin({
             name : 'common',
             filename : 'js/base.js'
         }),
-        //µ¥¶À´ò°ücss
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½css
         new ExtractTextPlugin("css/[name].css"),
-        //htmlÄ£°åµÄ´¦Àí
-        new HtmlWebpackPlugin(getHtmlConfig('index')),
-        new HtmlWebpackPlugin(getHtmlConfig('login')),
+        //htmlÄ£ï¿½ï¿½Ä´ï¿½ï¿½ï¿½
+        new HtmlWebpackPlugin(getHtmlConfig('index','é¦–é¡µ')),
+        new HtmlWebpackPlugin(getHtmlConfig('login','ç”¨æˆ·ç™»å½•')),
+        new HtmlWebpackPlugin(getHtmlConfig('result','æ“ä½œç»“æœ'))
     ]
 }
 
