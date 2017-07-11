@@ -17,12 +17,12 @@ var nav = {
     },
     bindEvent : function(){
         //绑定点击登录事件
-        $('.js-login').click(function(){
+        $('.js-user-login').click(function(){
             _mm.doLogin();
         });
         //绑定点击注册时间
         $('.js-register').click(function(){
-            window.location.href = './register.html';
+            window.location.href = './user-register.html';
         });
         //绑定点击退出时间
         $('js-logout').click(function() {
@@ -36,7 +36,8 @@ var nav = {
     //加载用户信息
     loadUserInfo : function(){
         _user.checkLogin(function(res){
-            $('.user.not-login').hide().siblings('.user.login').show().find('.username').text(res.username);
+            $('.user.not-login').hide().siblings('.user.login').show()
+                .find('.username').text(res.username);
         }, function(errMsg){
             //do nothing
         });
