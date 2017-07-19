@@ -81,7 +81,7 @@ var _mm = {
     },
     //������ҳ
     goHome : function () {
-        window.location.href = './index.string';
+        window.location.href = './banner.string';
     }
 };
 module.exports = _mm;

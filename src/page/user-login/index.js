@@ -41,7 +41,7 @@ var page = {
                 username: $.trim($('#username').val()),
                 password: $.trim($('#password').val())
             },
-        //表单验证结果（成功或者失败）
+            //validateResult是表单验证结果（成功或者失败）
             validateResult = this.formValidate(formData);
         //验证成功
         if (validateResult.status) {
