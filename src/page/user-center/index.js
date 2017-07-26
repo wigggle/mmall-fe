@@ -1,6 +1,7 @@
 /**
  * Created by mshuang on 2017/7/11.
  */
+
 'use strict';
 
 require('page/common/nav/index.js');
